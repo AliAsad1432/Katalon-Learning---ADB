@@ -1,0 +1,30 @@
+// Replace 'your.package.name' with the actual package name of your application
+String packageName = 'com.senarios.dataplain.dev'
+
+// Command to clear cache
+String clearCacheCommand = 'adb shell pm clear ' + 'com.senarios.dataplain.dev'
+
+try {
+    // Execute the command to clear cache and storage
+    def process = Runtime.getRuntime().exec(clearCacheCommand)
+
+    process.waitFor()
+
+    // Log the output
+    def output = process.getInputStream().text
+
+    def error = process.getErrorStream().text
+
+    if (output) {
+        KeywordUtil.logInfo('Output: ' + output)
+    }
+    
+    if (error) {
+        KeywordUtil.logWarning('Error: ' + error)
+    }
+    
+    KeywordUtil.logInfo('Cache and storage cleared for package: ' + 'com.senarios.dataplain.dev')
+}
+catch (Exception e) {
+    KeywordUtil.markFailed('Failed to clear cache and storage: ' + e.message)
+} 
